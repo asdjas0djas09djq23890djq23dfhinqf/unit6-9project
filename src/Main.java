@@ -1,4 +1,7 @@
-public class Main {
+import javax.swing.*;
+import java.awt.*;
+
+ class Main {
     public static void main(String[] args) {
         Frame frame = new Frame();
     }
