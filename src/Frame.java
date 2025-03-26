@@ -6,7 +6,7 @@ public class Frame {
     public Frame() {
         JFrame frame = new JFrame("Fruit Ninja");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 600);
+        frame.setSize(970, 646);
         frame.setLocationRelativeTo(null);
 
         DisplayPanel panel = new DisplayPanel();

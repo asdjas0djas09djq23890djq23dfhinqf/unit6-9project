@@ -3,6 +3,6 @@ import java.awt.*;
 
  class Main {
     public static void main(String[] args) {
-        Frame frame = new Frame();
+        GameLogic game = new GameLogic();
     }
 }
