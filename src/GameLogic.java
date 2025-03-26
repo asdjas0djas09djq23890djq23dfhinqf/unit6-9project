@@ -1,5 +1,11 @@
+import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.sound.sampled.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GameLogic {
     private static int moves = 0;
@@ -16,6 +22,19 @@ public class GameLogic {
             }
         };
     }
+
+//    private static Image loadImage(String imageFilePath) throws IOException {
+//        return ImageIO.read(new File(imageFilePath));
+//    }
+//
+//    private static Clip loadSound(String soundFilePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+//        AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(soundFilePath));
+//        Clip clip = AudioSystem.getClip();
+//        clip.open(audioIn);
+//        return clip;
+//    }
+
+
 
     public void decideFruitAndThrow() {
         int level = 3;
