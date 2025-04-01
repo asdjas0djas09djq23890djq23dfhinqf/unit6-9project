@@ -3,19 +3,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.sound.sampled.*;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameLogic {
-    private static int moves = 0;
+    private int moves;
     Timer timer;
     Frame frame;
     TimerTask throwFruit;
 
     public GameLogic() {
+        moves = 0;
+
         frame = new Frame();
         timer = new Timer();
+
         throwFruit = new TimerTask() {
             public void run() {
                 decideFruitAndThrow();
