@@ -28,10 +28,6 @@ public class GameLogic {
         };
     }
 
-//    private static Image loadImage(String imageFilePath) throws IOException {
-//        return ImageIO.read(new File(imageFilePath));
-//    }
-//
 //    private static Clip loadSound(String soundFilePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 //        AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(soundFilePath));
 //        Clip clip = AudioSystem.getClip();
