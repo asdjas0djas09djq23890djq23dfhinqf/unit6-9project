@@ -15,7 +15,7 @@ public class Frame {
         frame.setContentPane(panel);
 
         //test object moving
-        ThrowingObject object = new ThrowingObject("images/Apple.png");
+        ThrowingObject object = new ThrowingObject("images/Apple.png", frame);
         object.setSize(frame.getWidth(), frame.getHeight());
         panel.add(object);
 
