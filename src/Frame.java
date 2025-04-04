@@ -9,10 +9,17 @@ public class Frame {
         frame.setSize(1940, 1292);
         frame.setLocationRelativeTo(null);
 
+
+
+
         //background
         DisplayPanel panel = new DisplayPanel();
         panel.setLayout(null);
         frame.setContentPane(panel);
+
+
+
+
 
         //test object moving
         ThrowingObject object = new ThrowingObject("images/Apple.png", frame);

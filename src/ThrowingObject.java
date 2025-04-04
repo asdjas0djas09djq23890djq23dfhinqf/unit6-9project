@@ -7,35 +7,40 @@ class ThrowingObject extends JPanel implements ActionListener {
     private Image image;
     private int x;
     private int y;
-    private double angle;
+    private double speedX;
     private Timer timer;
     private JFrame frame;
+    private double Amplitude = (int)(Math.random() * (600 - 500 + 1)) + 500;
+    private double angle;
 
     public ThrowingObject(String imagePath, JFrame frame) {
         this.image = new ImageIcon(imagePath).getImage();
         setOpaque(false);
-        x = 200;
-        angle = 0;
+        x = (int)(Math.random() * (1000 - 500 + 1)) + 500;
+        if (x>=750) {
+            speedX =-2;
+        } else {
+            speedX =2;
+        }
         this.frame = frame;
-        timer = new Timer(1, this);
+        timer = new Timer(20, this);
         timer.start();
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, x, y, 180, 180, this);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        x += 2;
-        angle += 0.02;
-        y = 350;
-        y *= Math.cos(angle);
-        if (x > getWidth()) {
-            x = -image.getWidth(this);
+        if (y +180 < frame.getContentPane().getHeight()) {
+            g.drawImage(image, x, y, 180, 180, this);  // Draw the object at new position
         }
-        if (y > 900) {
-            //frame.remove()
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        x += (int) speedX;
+        angle+=0.05;
+        y = (int) (frame.getContentPane().getHeight() - 180 + Amplitude * Math.sin(angle));
+        if (y>1960) {
+            timer.stop();
         }
         repaint();
     }
