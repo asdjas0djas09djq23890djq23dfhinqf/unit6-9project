@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameLogic extends Frame {
+public class GameLogic {
     private int moves;
     Timer timer;
     Frame frame;
@@ -23,7 +23,7 @@ public class GameLogic extends Frame {
                 decideFruitAndThrow();
             }
         };
-        timer.schedule(throwFruit, 10);
+        timer.schedule(throwFruit, 1000, 1000);
     }
 
      public void decideFruitAndThrow() {
@@ -46,7 +46,6 @@ public class GameLogic extends Frame {
         for (int i = 0; i < amount; i++) {
             throwObject();
         }
-        timer.schedule(throwFruit, nextCooldown);
     }
 
     public void throwObject() {
