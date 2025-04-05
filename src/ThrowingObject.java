@@ -30,7 +30,7 @@ class ThrowingObject extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (y +180 < frame.getContentPane().getHeight()) {
+        if (y + 90 < frame.getContentPane().getHeight()) {
             g.drawImage(image, x, y, 180, 180, this);  // Draw the object at new position
         }
     }

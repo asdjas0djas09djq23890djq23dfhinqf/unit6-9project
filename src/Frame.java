@@ -2,33 +2,29 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Frame {
-    private DisplayPanel panel;
-    private JFrame frame;
+    public DisplayPanel backgroundPanel;
+    public JFrame frame;
 
     public Frame() {
+        //create frame
         frame = new JFrame("Fruit Ninja");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1940, 1292);
         frame.setLocationRelativeTo(null);
 
         //background
-        panel = new DisplayPanel();
-        panel.setLayout(null);
-        frame.setContentPane(panel);
-
-        //test object moving
-        ThrowingObject object = new ThrowingObject("images/Apple.png", frame);
-        object.setSize(frame.getWidth(), frame.getHeight());
-        panel.add(object);
+        backgroundPanel = new DisplayPanel();
+        backgroundPanel.setLayout(null);
+        frame.setContentPane(backgroundPanel);
 
         frame.setVisible(true);
 
-        panel.revalidate();
-        panel.repaint();
+        backgroundPanel.revalidate();
+        backgroundPanel.repaint();
     }
 
-    public DisplayPanel getPanel() {
-        return panel;
+    public JPanel getPanel() {
+        return backgroundPanel;
     }
 
     public JFrame getFrame() {

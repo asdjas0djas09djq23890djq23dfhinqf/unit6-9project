@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameLogic extends Frame {
+public class GameLogic {
     private int moves;
     Timer timer;
     Frame frame;
@@ -28,7 +28,7 @@ public class GameLogic extends Frame {
             }
         };
 
-        timer.schedule(throwFruit, 10);
+        timer.schedule(throwFruit, 100, 10000);
     }
 
 //    private static Clip loadSound(String soundFilePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -60,14 +60,11 @@ public class GameLogic extends Frame {
         for (int i = 0; i < amount; i++) {
             throwObject();
         }
-        timer.schedule(throwFruit, nextCooldown);
     }
 
     public void throwObject() {
-        ThrowingObject object = new ThrowingObject("images/Apple.png", frame);
-        object.setSize(frame.getWidth(), frame.getHeight());
-        getPanel().add(object);
-        getPanel().repaint();
-        getPanel().revalidate();
+        ThrowingObject object = new ThrowingObject("images/Apple.png", frame.getFrame());
+        object.setSize(frame.getFrame().getWidth(), frame.getFrame().getHeight());
+        frame.getPanel().add(object);
     }
 }
