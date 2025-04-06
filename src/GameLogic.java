@@ -50,7 +50,8 @@ public class GameLogic {
 
     public void throwObject() {
         SwingUtilities.invokeLater(() -> {
-            ThrowingObject object = new ThrowingObject("images/Apple.png", frame.getFrame());
+            String randomImage = FruitDataLoader.getRandomImagePath();
+            ThrowingObject object = new ThrowingObject(randomImage, frame.getFrame());
             object.setBounds(0, 0, 180, 180);
             if (frame.getPanel() != null) {
                 frame.getPanel().add(object);
