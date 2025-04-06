@@ -10,7 +10,7 @@ class ThrowingObject extends JPanel implements ActionListener {
     private double speedX;
     private Timer timer;
     private JFrame frame;
-    private double Amplitude = (int)(Math.random() * 201) + 800; // Was 500-600, now 800-1000
+    private double Amplitude = (int)(Math.random() * 201) + 800;
     private double angle;
     private int counter;
 
@@ -25,7 +25,7 @@ class ThrowingObject extends JPanel implements ActionListener {
             speedX =2;
         }
         this.frame = frame;
-        timer = new Timer(20, this);
+        timer = new Timer(30, this);
         timer.start();
     }
 
@@ -48,8 +48,6 @@ class ThrowingObject extends JPanel implements ActionListener {
             x += (int) speedX;
             y = (int)(1292 - 180 + Amplitude * Math.sin(angle));
             setLocation(x, y);
-            System.out.printf("x: %d y: %d angle: %.2f counter: %d%n",
-                    x, y, angle, counter);
             if (angle >= 2 * Math.PI) {
                 counter++;
             }
