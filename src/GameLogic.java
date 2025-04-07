@@ -1,31 +1,48 @@
-import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.sound.sampled.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameLogic {
     private int moves;
-    Timer timer;
-    Frame frame;
-    TimerTask throwFruit;
-    private int objectCount =0;
+    private Timer throwTimer;
+    private Timer updateFruitTimer;
+    private Frame frame;
+    private TimerTask throwFruit;
+    private TimerTask updateFruit;
+    private ArrayList<JPanel> objects;
 
     public GameLogic() {
         moves = 0;
+        objects = new ArrayList<>();
         frame = new Frame();
-        timer = new Timer();
+        throwTimer = new Timer();
+        updateFruitTimer = new Timer();
         throwFruit = new TimerTask() {
             public void run() {
                 decideFruitAndThrow();
             }
         };
-        timer.schedule(throwFruit, 1000, 1000);
+        updateFruit = new TimerTask() {
+            public void run() {
+                updateFruit();
+            }
+        };
+        throwTimer.schedule(throwFruit, 1000, 500);
+        updateFruitTimer.schedule(updateFruit, 30, 30);
+    }
+
+    public void removeObject(ThrowingObject object) {
+        if (frame.getPanel() != null) {
+            frame.getPanel().remove(object);
+            frame.getPanel().revalidate();
+            frame.getPanel().repaint();
+            for (int i = 0; i < objects.size(); i++) {
+                if (objects.get(i) == object) {
+                    objects.remove(i);
+                }
+            }
+        }
     }
 
     public void decideFruitAndThrow() {
@@ -53,17 +70,21 @@ public class GameLogic {
     public void throwObject() {
         SwingUtilities.invokeLater(() -> {
             String randomImage = FruitDataLoader.getRandomImagePath();
-            ThrowingObject object = new ThrowingObject(randomImage, frame.getFrame());
-            objectCount++;
+            JPanel object = new ThrowingObject(randomImage, frame.getFrame());
+            objects.add(object);
             object.setBounds(0, 0, 180, 180);
-            if (objectCount>10) {
-                System.gc();
-                objectCount =0;
-            }
             if (frame.getPanel() != null) {
                 frame.getPanel().add(object);
                 frame.getPanel().repaint();
             }
         });
+    }
+
+    public void updateFruit() {
+        for (int i = 0; i < objects.size(); i++) {
+            ThrowingObject objectTemp = (ThrowingObject) objects.get(i);
+            objectTemp.updateValues();
+            objectTemp = null;
+        }
     }
 }

@@ -17,7 +17,7 @@ public class Frame {
         panel.revalidate();
         panel.repaint();
     }
-    public DisplayPanel getPanel() {
+    public JPanel getPanel() {
         return panel;
     }
     public JFrame getFrame() {
