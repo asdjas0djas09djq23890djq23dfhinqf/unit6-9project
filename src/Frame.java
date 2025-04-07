@@ -10,22 +10,16 @@ public class Frame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1940, 1292);
         frame.setLocationRelativeTo(null);
-
         panel = new DisplayPanel();
         panel.setLayout(null);
         frame.setContentPane(panel);
-
-
         frame.setVisible(true);
-
         panel.revalidate();
         panel.repaint();
     }
-
     public DisplayPanel getPanel() {
         return panel;
     }
-
     public JFrame getFrame() {
         return frame;
     }

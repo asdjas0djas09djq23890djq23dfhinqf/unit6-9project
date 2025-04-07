@@ -14,6 +14,8 @@ public class GameLogic {
     Timer timer;
     Frame frame;
     TimerTask throwFruit;
+    private int objectCount =0;
+
     public GameLogic() {
         moves = 0;
         frame = new Frame();
@@ -26,7 +28,7 @@ public class GameLogic {
         timer.schedule(throwFruit, 1000, 1000);
     }
 
-     public void decideFruitAndThrow() {
+    public void decideFruitAndThrow() {
         int level = 3;
         int nextCooldown = (int) (Math.random() * 1500 + 1500);
         int amount = (int) (Math.random() * 4 + 2);
@@ -52,7 +54,12 @@ public class GameLogic {
         SwingUtilities.invokeLater(() -> {
             String randomImage = FruitDataLoader.getRandomImagePath();
             ThrowingObject object = new ThrowingObject(randomImage, frame.getFrame());
+            objectCount++;
             object.setBounds(0, 0, 180, 180);
+            if (objectCount>10) {
+                System.gc();
+                objectCount =0;
+            }
             if (frame.getPanel() != null) {
                 frame.getPanel().add(object);
                 frame.getPanel().repaint();

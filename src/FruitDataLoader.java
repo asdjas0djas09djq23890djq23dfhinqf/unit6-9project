@@ -7,7 +7,7 @@ public class FruitDataLoader {
 
     static {
         try {
-            Scanner scanner = new Scanner(new File("fruits.txt"));
+            Scanner scanner = new Scanner(new File("data.txt"));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split("//");
