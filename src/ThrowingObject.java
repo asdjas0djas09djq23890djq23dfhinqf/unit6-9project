@@ -11,8 +11,10 @@ class ThrowingObject extends JPanel {
     private double angle;
     private int counter;
     private int elapsedSeconds = 0;
+    GameLogic gameLogic;
 
-    public ThrowingObject(String imagePath, JFrame frame) {
+    public ThrowingObject(String imagePath, JFrame frame, GameLogic logic) {
+        gameLogic = logic;
         counter =0;
         this.image = new ImageIcon(imagePath).getImage();
         setOpaque(false);
@@ -49,9 +51,7 @@ class ThrowingObject extends JPanel {
         if (angle >= 2 * Math.PI) {
             Container parent = getParent();
             if (parent != null) {
-                parent.remove(this);
-                parent.revalidate();
-                parent.repaint();
+                gameLogic.removeObject(this);
             }
         } else {
             repaint();

@@ -32,7 +32,7 @@ public class GameLogic {
         updateFruitTimer.schedule(updateFruit, 30, 30);
     }
 
-    public void removeObject(ThrowingObject object) {
+    public void removeObject(JPanel object) {
         if (frame.getPanel() != null) {
             frame.getPanel().remove(object);
             frame.getPanel().revalidate();
@@ -70,7 +70,7 @@ public class GameLogic {
     public void throwObject() {
         SwingUtilities.invokeLater(() -> {
             String randomImage = FruitDataLoader.getRandomImagePath();
-            JPanel object = new ThrowingObject(randomImage, frame.getFrame());
+            JPanel object = new ThrowingObject(randomImage, frame.getFrame(), this);
             objects.add(object);
             object.setBounds(0, 0, 180, 180);
             if (frame.getPanel() != null) {
