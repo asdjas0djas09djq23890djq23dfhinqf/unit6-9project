@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
@@ -15,6 +16,7 @@ public class GameLogic {
     private TimerTask update;
     private ArrayList<JPanel> objects;
     private int fails;
+    private JLabel counterLabel;
 
     public GameLogic() {
         moves = 0;
@@ -35,10 +37,22 @@ public class GameLogic {
         };
         throwTimer.schedule(throwFruit, 1000);
         updateFruitTimer.schedule(update, 30, 30);
+        counterLabel = new JLabel("FAILS REMAINING: " + (3 - fails));
+        counterLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        counterLabel.setForeground(Color.RED);
+        counterLabel.setBounds(1400, 0, 200, 200);
+        frame.getJFrame().add(counterLabel);
     }
 
     public void addFail() {
         fails++;
+        if (fails == 4) {
+            lose();
+        }
+    }
+
+    public void lose() {
+
     }
 
     public void addToObjects(JPanel input) {
