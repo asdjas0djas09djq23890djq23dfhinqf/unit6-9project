@@ -22,6 +22,7 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
     private GameLogic gameLogic;
     private String path;
     private Frame backgroundPanel;
+    private double angleIncrement = (Math.random() * 0.02 + 0.04);
 
     public int x1 = 0;
     public int y1 = 0;
@@ -43,9 +44,9 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
         this.setVisible(false);
         x = (int)(Math.random() * (800)) + 500;
         if (x>=750) {
-            speedX = -((int)(Math.random() * 6) + 1);
+            speedX = -((int)(Math.random() * 10) + 1);
         } else {
-            speedX = (int)(Math.random() * 6) + 1;
+            speedX = (int)(Math.random() * 10) + 1;
         }
         this.frame = frame;
         setLocation(x, y);
@@ -82,27 +83,7 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
     }
 
     public void updateValues() {
-//        elapsedSeconds ++;
-//        angle += 0.05;
-//        x += (int) speedX;
-//        y = (int) (1292 - 180 + Amplitude * Math.sin(angle));
-//        setLocation(x, y);
-//        if (angle >= 2 * Math.PI) {
-//            Container parent = getParent();
-//            if (parent != null) {
-//                gameLogic.addFail();
-//                gameLogic.removeObject(this);
-//            }
-//        } else {
-//            repaint();
-//        }
-//        if (elapsedSeconds == 2) {
-//            this.setVisible(true);
-//        }
-
         elapsedSeconds++;
-        // System.out.println("Frame y: " + y + "clearThrow " + clearThrow);
-        // Remove the object from the panel if y exceeds 1100
 
         if (y > 1100+180  )  {
             this.setVisible(false);
@@ -115,7 +96,7 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
 
         if (counter < 1) {
             {
-                angle += 0.05;
+                angle += angleIncrement;
                 x += (int) speedX;
                 y = (int) (1292 - 180 + Amplitude * Math.sin(angle));
                 setLocation(x, y);
@@ -126,7 +107,8 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
                 }
             }
             repaint();
-            if (elapsedSeconds == 1) {
+            if (elapsedSeconds == (int) (1240 * angleIncrement)) {
+                gameLogic.playSound("music/Throw-fruit.wav");
                 this.setVisible(true);
             }
         }

@@ -9,21 +9,40 @@ public class Splatter extends JPanel {
     private BufferedImage image;
     private GameLogic gameLogic;
     private float opacity = 0.75f;
+    private double rotation;
 
     public Splatter(String originalImagePath, GameLogic logic) {
         String splatterImagePath = "images/black-paint-splatter-png-2.png";
         gameLogic = logic;
+        String impactSound = "";
+        rotation = Math.random() * 6.28;
         if (originalImagePath.equals("images/Apple.png")) {
             splatterImagePath = "images/black-paint-splatter-png-2.png";
+            impactSound = "music/Impact-Apple.wav";
         } else if (originalImagePath.equals("images/Banana.png")) {
             splatterImagePath = "images/black-paint-splatter-png-2.png";
+            impactSound = "music/Impact-Banana.wav";
         } else if (originalImagePath.equals("images/Coconut.png")) {
             splatterImagePath = "images/black-paint-splatter-png-2.png";
+            impactSound = "music/Impact-Coconut.wav";
         } else if (originalImagePath.equals("images/Pineapple.png")) {
             splatterImagePath = "images/black-paint-splatter-png-2.png";
+            impactSound = "music/Impact-Pineapple.wav";
         } else if (originalImagePath.equals("images/Watermelon.png")) {
             splatterImagePath = "images/black-paint-splatter-png-2.png";
-            }
+            impactSound = "music/Impact-Watermelon.wav";
+        }
+        int soundRandom = (int) ((Math.random() * 3));
+        String fruitSound = "music/Splatter-Small-1.wav";
+        if (soundRandom == 0) {
+            fruitSound = "music/Splatter-Small-2.wav";
+        } else if (soundRandom == 1) {
+            fruitSound = "music/Splatter-Medium-1.wav";
+        } else if (soundRandom == 2) {
+            fruitSound = "music/Splatter-Medium-2.wav";
+        }
+        gameLogic.playSound(impactSound);
+        gameLogic.playSound(fruitSound);
         setOpaque(false);
         try {
             image = ImageIO.read(new File(splatterImagePath));
@@ -37,7 +56,8 @@ public class Splatter extends JPanel {
         if (image != null) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-            g2d.drawImage(image, 0, 0, 230, 180, null);
+            g2d.rotate(rotation, 200, 150);
+            g2d.drawImage(image, 0, 0, 400, 300, null);
             g2d.dispose();
         }
     }

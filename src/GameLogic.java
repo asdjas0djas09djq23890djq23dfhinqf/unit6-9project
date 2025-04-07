@@ -75,14 +75,14 @@ public class GameLogic {
 
     public void decideFruitAndThrow() {
         int level = 3;
-        int nextCooldown = (int) (Math.random() * 1000 + 1000);
+        int nextCooldown = (int) (Math.random() * 750 + 750);
         int amount = (int) (Math.random() * 4 + 2);
         if (moves >= 3 && moves < 10) {
             amount = (int) (Math.random() * 3 + 1);
-            nextCooldown = (int) (Math.random() * 1500 + 1500);
+            nextCooldown = (int) (Math.random() * 1000 + 1000);
             level = 2;
         } else if (moves < 3) {
-            nextCooldown = 3000;
+            nextCooldown = 2000;
             amount = 1;
             level = 1;
         }
