@@ -20,7 +20,7 @@ public class Frame {
     public JPanel getPanel() {
         return panel;
     }
-    public JFrame getFrame() {
+    public JFrame getJFrame() {
         return frame;
     }
 }
