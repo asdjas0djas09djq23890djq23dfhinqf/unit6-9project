@@ -23,7 +23,6 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
     private String path;
     private Frame backgroundPanel;
 
-    public Image image1;
     public int x1 = 0;
     public int y1 = 0;
     public int mymouseClicked = 0;
@@ -38,7 +37,6 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
         backgroundPanel = background;
         counter =0;
         this.image = new ImageIcon(imagePath).getImage();
-        this.image1 = new ImageIcon("images/AppleSplatter.png").getImage();
         addMouseListener(this);
 
         setOpaque(false);
@@ -54,36 +52,25 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
         this.frame.setBounds(0,0,1940,1280);
 
 
-//        addMouseListener(new MouseAdapter() {
-//            public void mousePressed(MouseEvent e) {
-//                // onObjectClick();
-//
-//                this.image = this.image1;
-//                mymouseClicked = 1;
-//                clearThrow = 1;
-//            }
-//        });
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                onObjectClick();
+            }
+       });
     }
 
     private void onObjectClick() {
-//        Splatter splatter = new Splatter(path, x, y, gameLogic);
-//        splatter.setBounds(x, y, 180, 180);
-//        if (backgroundPanel.getPanel() != null) {
-//            backgroundPanel.getPanel().add(splatter);
-//            backgroundPanel.getPanel().repaint();
-//        }
-//        gameLogic.addToObjects(splatter);
-//        Container parent = getParent();
-//        if (parent != null) {
-//            gameLogic.removeObject(this);
-//        }
-
-//        this.image = this.image1;
-//        mymouseClicked = 1;
-//        clearThrow = 1;
-//        repaint();
-//
-
+        Splatter splatter = new Splatter(path, gameLogic);
+        splatter.setBounds(x - 75, y - 50, 400, 300);
+        if (backgroundPanel.getPanel() != null) {
+            backgroundPanel.getPanel().add(splatter);
+            backgroundPanel.getPanel().repaint();
+        }
+        gameLogic.addToObjects(splatter);
+        Container parent = getParent();
+        if (parent != null) {
+            gameLogic.removeObject(this);
+        }
     }
 
     @Override
@@ -113,10 +100,9 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
 //            this.setVisible(true);
 //        }
 
-
         elapsedSeconds++;
         // System.out.println("Frame y: " + y + "clearThrow " + clearThrow);
-        // Remove the object from the panel if y exceeds 11000
+        // Remove the object from the panel if y exceeds 1100
 
         if (y > 1100+180  )  {
             this.setVisible(false);
@@ -128,12 +114,6 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
         }
 
         if (counter < 1) {
-            if (mymouseClicked == 1)
-            {
-                // Fall straight down after clicking
-                y = y+ 15; // falling speed
-                setLocation(x, y);
-            } else
             {
                 angle += 0.05;
                 x += (int) speedX;
@@ -145,11 +125,6 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
                     counter++;
                 }
             }
-            if (mymouseClicked == 1) {
-                // Fall straight down after clicking
-                y = y + 10; // falling speed
-                setLocation(x, y);
-            }
             repaint();
             if (elapsedSeconds == 1) {
                 this.setVisible(true);
@@ -157,28 +132,41 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
         }
     }
 
-
-
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         updateValues();
     }
 
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+   /* public void mouseClicked(MouseEvent e) {
         // only change image when mouseClicked anywhere in the frame no to check getX getY
         deathbyswipecount = 0;
-        int hardMode =0;
-        if (hardMode ==0) {
+        int hardMode = 0;
+        if (hardMode == 0) {
             this.image = this.image1;
             mymouseClicked = 1;
             clearThrow = 1;
 
-        }else {
+        } else {
             int clickX = e.getX();
             int clickY = e.getY();
             int easylevel = 5;
@@ -190,50 +178,44 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
         }
         repaint();
     }
-
-
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // Swipe Easy Mode with mouse hover
-if (deathbyswipecount<4) {
-    int clickX = e.getX();
-    int clickY = e.getY();
-    // Swipe mode too easy so changed frame size to smaller more targeted.
-    // System.out.println("Mouse clicked at: " + clickX + ", " + clickY);
-    int easylevel = 20;
-    if (clickX >= 0 + easylevel && clickX <= 180 - easylevel && clickY >= 0 + easylevel && clickY <= 180 - easylevel) {
-        this.image = this.image1;
-        mymouseClicked = 1;
-        clearThrow = 1;
-        repaint();
-        deathbyswipecount++;
-    } else {
-        clearThrow = 0;
-    }
+*/
+    // public void mouseEntered(MouseEvent e) {
+    //         // Swipe Easy Mode with mouse hover
+    // if (deathbyswipecount<4) {
+    //     int clickX = e.getX();
+    //     int clickY = e.getY();
+    //     // Swipe mode too easy so changed frame size to smaller more targeted.
+    //     // System.out.println("Mouse clicked at: " + clickX + ", " + clickY);
+    //     int easylevel = 20;
+    //     if (clickX >= 0 + easylevel && clickX <= 180 - easylevel && clickY >= 0 + easylevel && clickY <= 180 - easylevel) {
+    //         this.image = this.image1;
+    //         mymouseClicked = 1;
+    //         clearThrow = 1;
+    //         repaint();
+    //         deathbyswipecount++;
+    //     } else {
+    //         clearThrow = 0;
+    //     }
+    // }
+    //     }
+    //
+    //     @Override
+    //     public void mousePressed(MouseEvent e) {
+    // //        this.image = this.image1;
+    // //        mymouseClicked = 1;
+    // //        clearThrow = 1;
+    //
+    //     }
+    //
+    //     @Override
+    //     public void mouseReleased(MouseEvent e) {
+    //     }
+    //
+    //     @Override
+    //     public void mouseExited(MouseEvent e) {
+    //     }
+    //
+    //     public int getClearThrow() {
+    //         return clearThrow;
+    //     }
 }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-//        this.image = this.image1;
-//        mymouseClicked = 1;
-//        clearThrow = 1;
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    public int getClearThrow() {
-        return clearThrow;
-    }
-
-}
-
-

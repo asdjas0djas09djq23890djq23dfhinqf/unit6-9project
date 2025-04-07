@@ -52,7 +52,8 @@ public class GameLogic {
     }
 
     public void lose() {
-
+        update = null;
+        throwFruit = null;
     }
 
     public void addToObjects(JPanel input) {
