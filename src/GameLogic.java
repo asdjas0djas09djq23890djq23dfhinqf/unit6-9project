@@ -38,7 +38,6 @@ public class GameLogic {
         };
         throwTimer.schedule(throwFruit, 1000);
         updateFruitTimer.schedule(update, 30, 30);
-
         //supposed to be the fail counter but it doesnt show correctly
         counterLabel = new JLabel("FAILS REMAINING: " + (3 - fails));
         counterLabel.setFont(new Font("Arial", Font.BOLD, 36));
@@ -141,19 +140,37 @@ public class GameLogic {
         throwTimer.schedule(throwFruit, nextCooldown);
     }
 
+    // Returns an index from the options array with high fruit probability
+    private int getWeightedItemIndex() {
+        int[] weightedIndices = {
+                0, 0, 0, 0, 1, 1, 1,1, 2, 2, 2,2,
+                3, 3,3,3, 4, 4, 4,4, //Fruits
+                5, 6, 7, 8, 9, 10, 11 // non-fruits
+        };
+        int randomIndex = (int)(Math.random() * weightedIndices.length);
+        return weightedIndices[randomIndex];
+    }
+
+
     public void throwObject(int level) {
         SwingUtilities.invokeLater(() -> {
             String image = "";
-            int number = 0;
-            if (level == 1) {
-                number = (int) (Math.random() * 5);
-            } else if (level == 2) {
-                number = (int) (Math.random() * 9);
-            } else if (level == 3) {
-                number = (int) (Math.random() * 12);
+            int number = getWeightedItemIndex(); //  Custom method for weighted choice
+            String type = options[1][number];  // Type (Fruit, Duck, etc.)
+            // Check if it's a fruit or non-fruit, and set the image path accordingly
+            if ("Fruit".equals(type)) {
+                image = options[0][number];  // Fruit image path
+            } else {
+                // For non-fruits, use a different image (e.g., from index 5 onward for non-fruit objects)
+                image = options[0][5 + (number - 5)];  // Adjust the index for non-fruit images
             }
-            image = options[0][number];
-            JPanel object = new ThrowingObject(image, frame.getJFrame(), this, frame, options[1][number]);
+            // Now create the appropriate object (Fruit or NonFruit) based on the type
+            JPanel object;
+            if ("Fruit".equals(type)) {
+                object = new Fruit(image, frame.getJFrame(), this, frame, type);
+            } else {
+                object = new NonFruit(image, frame.getJFrame(), this, frame, type);
+            }
             objects.add(object);
             object.setBounds(0, 0, 180, 180);
             if (frame.getPanel() != null) {
@@ -162,6 +179,9 @@ public class GameLogic {
             }
         });
     }
+
+
+
 
     public void update() {
         for (int i = 0; i < objects.size(); i++) {

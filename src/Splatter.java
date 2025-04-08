@@ -62,7 +62,6 @@ public class Splatter extends JPanel {
             g2d.dispose();
         }
     }
-
     public void updateValues() {
         opacity = Math.max(0f, opacity - 0.005f);
         repaint();
