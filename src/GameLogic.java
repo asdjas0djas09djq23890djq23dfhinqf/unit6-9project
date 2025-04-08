@@ -16,10 +16,13 @@ public class GameLogic {
     private TimerTask update;
     private ArrayList<JPanel> objects;
     private int fails;
-    private JLabel counterLabel;
+    private JLabel countdownLabel;
+    private JLabel slicedCounterLabel;
+    private int numberSliced;
     private String[][] options;
 
     public GameLogic() {
+        numberSliced =0;
         moves = 0;
         fails = 0;
         objects = new ArrayList<>();
@@ -38,15 +41,22 @@ public class GameLogic {
         };
         throwTimer.schedule(throwFruit, 1000);
         updateFruitTimer.schedule(update, 30, 30);
-        //supposed to be the fail counter but it doesnt show correctly
-        counterLabel = new JLabel("FAILS REMAINING: " + (3 - fails));
-        counterLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        counterLabel.setForeground(Color.RED);
-        counterLabel.setBounds(1400, 0, 200, 200);
-        frame.getJFrame().add(counterLabel);
 
+
+        slicedCounterLabel = new JLabel("Sliced Objects: " + numberSliced);
+        slicedCounterLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        slicedCounterLabel.setForeground(Color.GREEN);
+        slicedCounterLabel.setBounds(0, 0, 300, 50);
+        frame.getJFrame().add(slicedCounterLabel);
+
+        countdownLabel = new JLabel("Time Left: 60");
+        countdownLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        countdownLabel.setForeground(Color.RED);
+        countdownLabel.setBounds(1700, 50, 200, 50);
+        frame.getJFrame().add(countdownLabel);
         initializeOptions();
     }
+
 
     //2d array of of item's images and their type (used for connecting images to sounds)
     public void initializeOptions() {
@@ -76,6 +86,15 @@ public class GameLogic {
         options[1][10] = "Chainsaw";
         options[1][11] = "Lawnmower";
     }
+    public void sliceFruit() {
+        numberSliced++;
+        updateSliceCounter();
+    }
+
+    public void updateSliceCounter() {
+        slicedCounterLabel.setText("Sliced Fruits: " + numberSliced);
+    }
+
 
     public void addFail() {
         fails++;

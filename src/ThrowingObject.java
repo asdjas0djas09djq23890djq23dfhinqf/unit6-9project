@@ -58,8 +58,10 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
         System.out.println("Object type: " + this.getClass().getName());  // Check the actual class name
         if (this instanceof Fruit) {
             playFruitSounds();
+            gameLogic.sliceFruit();
         } else if (this instanceof NonFruit) {
             playNonFruitSounds();
+            gameLogic.sliceFruit();
         }
     }
 
