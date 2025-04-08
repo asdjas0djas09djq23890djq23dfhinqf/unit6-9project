@@ -17,6 +17,7 @@ public class GameLogic {
     private ArrayList<JPanel> objects;
     private int fails;
     private JLabel counterLabel;
+    private String[][] options;
 
     public GameLogic() {
         moves = 0;
@@ -37,11 +38,44 @@ public class GameLogic {
         };
         throwTimer.schedule(throwFruit, 1000);
         updateFruitTimer.schedule(update, 30, 30);
+
+        //supposed to be the fail counter but it doesnt show correctly
         counterLabel = new JLabel("FAILS REMAINING: " + (3 - fails));
         counterLabel.setFont(new Font("Arial", Font.BOLD, 36));
         counterLabel.setForeground(Color.RED);
         counterLabel.setBounds(1400, 0, 200, 200);
         frame.getJFrame().add(counterLabel);
+
+        initializeOptions();
+    }
+
+    //2d array of of item's images and their type (used for connecting images to sounds)
+    public void initializeOptions() {
+        options = new String[2][12];
+        options[0][0] = "images/Apple.png";
+        options[0][1] = "images/Banana.png";
+        options[0][2] = "images/Coconut.png";
+        options[0][3] = "images/Pineapple.png";
+        options[0][4] = "images/Watermelon.png";
+        options[0][5] = "images/RubberDuck.png";
+        options[0][6] = "images/Wrench.png";
+        options[0][7] = "images/GlassVase.png";
+        options[0][8] = "images/Fence.png";
+        options[0][9] = "images/Car.png";
+        options[0][10] = "images/Chainsaw.png";
+        options[0][11] = "images/Lawnmower.png";
+        options[1][0] = "Fruit";
+        options[1][1] = "Fruit";
+        options[1][2] = "Fruit";
+        options[1][3] = "Fruit";
+        options[1][4] = "Fruit";
+        options[1][5] = "Duck";
+        options[1][6] = "Wrench";
+        options[1][7] = "Glass";
+        options[1][8] = "Fence";
+        options[1][9] = "Car";
+        options[1][10] = "Chainsaw";
+        options[1][11] = "Lawnmower";
     }
 
     public void addFail() {
@@ -96,7 +130,7 @@ public class GameLogic {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-            throwObject();
+            throwObject(level);
         }
         moves++;
         throwFruit = new TimerTask() {
@@ -107,10 +141,19 @@ public class GameLogic {
         throwTimer.schedule(throwFruit, nextCooldown);
     }
 
-    public void throwObject() {
+    public void throwObject(int level) {
         SwingUtilities.invokeLater(() -> {
-            String randomImage = FruitDataLoader.getRandomImagePath();
-            JPanel object = new ThrowingObject(randomImage, frame.getJFrame(), this, frame);
+            String image = "";
+            int number = 0;
+            if (level == 1) {
+                number = (int) (Math.random() * 5);
+            } else if (level == 2) {
+                number = (int) (Math.random() * 9);
+            } else if (level == 3) {
+                number = (int) (Math.random() * 12);
+            }
+            image = options[0][number];
+            JPanel object = new ThrowingObject(image, frame.getJFrame(), this, frame, options[1][number]);
             objects.add(object);
             object.setBounds(0, 0, 180, 180);
             if (frame.getPanel() != null) {

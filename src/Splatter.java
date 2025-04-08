@@ -12,24 +12,25 @@ public class Splatter extends JPanel {
     private double rotation;
 
     public Splatter(String originalImagePath, GameLogic logic) {
-        String splatterImagePath = "images/black-paint-splatter-png-2.png";
+        String splatterImagePath = "";
         gameLogic = logic;
         String impactSound = "";
         rotation = Math.random() * 6.28;
+        //each fruit has a custom impact sound on top of the splatter sound
         if (originalImagePath.equals("images/Apple.png")) {
-            splatterImagePath = "images/black-paint-splatter-png-2.png";
+            splatterImagePath = "images/AppleSplatter.png";
             impactSound = "music/Impact-Apple.wav";
         } else if (originalImagePath.equals("images/Banana.png")) {
-            splatterImagePath = "images/black-paint-splatter-png-2.png";
+            splatterImagePath = "images/BananaSplatter.png";
             impactSound = "music/Impact-Banana.wav";
         } else if (originalImagePath.equals("images/Coconut.png")) {
-            splatterImagePath = "images/black-paint-splatter-png-2.png";
+            splatterImagePath = "images/CoconutSplatter.png";
             impactSound = "music/Impact-Coconut.wav";
         } else if (originalImagePath.equals("images/Pineapple.png")) {
-            splatterImagePath = "images/black-paint-splatter-png-2.png";
+            splatterImagePath = "images/PineappleSplatter.png";
             impactSound = "music/Impact-Pineapple.wav";
         } else if (originalImagePath.equals("images/Watermelon.png")) {
-            splatterImagePath = "images/black-paint-splatter-png-2.png";
+            splatterImagePath = "images/WatermelonSplatter.png";
             impactSound = "music/Impact-Watermelon.wav";
         }
         int soundRandom = (int) ((Math.random() * 3));

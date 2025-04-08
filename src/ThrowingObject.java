@@ -23,6 +23,7 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
     private String path;
     private Frame backgroundPanel;
     private double angleIncrement = (Math.random() * 0.02 + 0.04);
+    private String type;
 
     public int x1 = 0;
     public int y1 = 0;
@@ -32,14 +33,14 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
     private int mouseY =0;
     private int deathbyswipecount = 0 ;
 
-    public ThrowingObject(String imagePath, JFrame frame, GameLogic logic, Frame background) {
+    public ThrowingObject(String imagePath, JFrame frame, GameLogic logic, Frame background, String type) {
         path = imagePath;
         gameLogic = logic;
         backgroundPanel = background;
         counter =0;
         this.image = new ImageIcon(imagePath).getImage();
         addMouseListener(this);
-
+        this.type = type;
         setOpaque(false);
         this.setVisible(false);
         x = (int)(Math.random() * (800)) + 500;
@@ -60,14 +61,20 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
        });
     }
 
+    //detects object breaking, creates a Splatter object and deletes the object
     private void onObjectClick() {
         Splatter splatter = new Splatter(path, gameLogic);
-        splatter.setBounds(x - 75, y - 50, 400, 300);
+        splatter.setBounds(x - 75, y - 50, 400, 400);
         if (backgroundPanel.getPanel() != null) {
             backgroundPanel.getPanel().add(splatter);
             backgroundPanel.getPanel().repaint();
         }
         gameLogic.addToObjects(splatter);
+        if (type.equals("GlassVase")) {
+            gameLogic.playSound("music/GlassVaseSmash.wav");
+        } else if (type.equals("Wrench")) {
+            gameLogic.playSound("music/metal pipe falling sound effect.wav");
+        }
         Container parent = getParent();
         if (parent != null) {
             gameLogic.removeObject(this);
@@ -85,11 +92,12 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
     public void updateValues() {
         elapsedSeconds++;
 
-        if (y > 1100+180  )  {
+        if (y > 1100) {
             this.setVisible(false);
+
             remove(this);
 
-        } else   {
+        } else {
             this.setVisible(true);
             clearThrow = 0;
         }
@@ -106,17 +114,36 @@ class ThrowingObject extends JPanel implements ActionListener, MouseListener {
                     counter++;
                 }
             }
+
             repaint();
+
+            //gives different objects different sounds when they spawn in
             if (elapsedSeconds == (int) (1240 * angleIncrement)) {
-                gameLogic.playSound("music/Throw-fruit.wav");
+                if (type.equals("Fruit") || type.equals("Glass") || type.equals("Fence")) {
+                    gameLogic.playSound("music/Throw-fruit.wav");
+                } else if (type.equals("Duck")) {
+                    gameLogic.playSound("music/QuackSound.wav");
+                } else if (type.equals("Car")) {
+                    gameLogic.playSound("music/CarBeep.wav");
+                } else if (type.equals("Wrench")) {
+                    gameLogic.playSound("music/clong-1.wav");
+                }
                 this.setVisible(true);
+            }
+
+            //for chainsaw and lawnmower, when they are on the screen they play this sound the whole time until they are deleted
+            if (!(type.equals("Fruit")) && elapsedSeconds % 5 == 0 && elapsedSeconds >= (int) (1240 * angleIncrement)) {
+                if (type.equals("Chainsaw")) {
+                    gameLogic.playSound("music/ChainsawOnScreenSound.wav");
+                } else if (type.equals("Lawnmower")) {
+                    gameLogic.playSound("music/LawnmowerOnScreenSound.wav");
+                }
             }
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        updateValues();
     }
 
     @Override
